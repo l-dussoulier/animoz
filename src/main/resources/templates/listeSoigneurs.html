@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Soigneur</title>
+</head>
+<body>
+<table>
+
+    <tbody>
+    <tr>
+        <td>Numero</td>
+        <td>Nom</td>
+        <td>Date de recrutement</td>
+    </tr>
+    <tr data-th-each="soigneur : ${listeSoigneur}">
+        <td data-th-text="${ soigneur.numero }"></td>
+        <td data-th-text="${ soigneur.nom }"></td>
+        <td data-th-text="${ soigneur.dateRecrutement }"></td>
+
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

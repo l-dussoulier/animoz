@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h2>Liste des animaux</h2>
+<br>
+
+<br>
+<table>
+    <tbody>
+    <tr>
+        <td>Nom</td>
+        <td>Espece</td>
+        <td>Régime alimentaire</td>
+    </tr>
+    <tr data-th-each="animal : ${listeAnimaux}">
+        <td data-th-text="${ animal.nom }"></td>
+        <td data-th-text="${ animal.espece.nom }"></td>
+        <td data-th-text="${ animal.regime }"></td>
+    </tr>
+    </tbody>
+</table>
+
+<form method="GET" data-th-action="@{/findAnimal}" accept-charset="utf-8">
+    <label>Nom</label>
+    <input type="text" name="filtre">
+    <input type="submit">
+</form>
+
+</body>
+</html>
