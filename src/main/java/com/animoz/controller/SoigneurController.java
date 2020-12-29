@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Controller
@@ -36,11 +38,13 @@ public class SoigneurController {
     @PostMapping(path = "/soigneur")
     public String AjouterSoigneur(@Validated @ModelAttribute("soigneur") SoigneurDto soigneurDto, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
+
             return affichierFormulaireCreation(soigneurDto);
+
         }
-        System.out.println(soigneurDto.getNom());
-        System.out.println(soigneurDto.getNumero());
+
         Soigneur soigneur = soigneurService.addSoigneur(soigneurDto);
+
 
         return "accueil";
     }

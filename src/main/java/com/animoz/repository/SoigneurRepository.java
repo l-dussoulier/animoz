@@ -19,18 +19,17 @@ public class SoigneurRepository {
     public List<Soigneur> getListSoigneur() {
         return em.createQuery("select s from Soigneur s ORDER BY s.nom", Soigneur.class)
                             .getResultList();
-
     }
 
     public void save(Soigneur s){
         try {
-            em.getTransaction().begin();
             Soigneur soigneur = new Soigneur();
             soigneur.setNom(s.getNom());
             soigneur.setNumero(s.getNumero());
-            System.out.println(soigneur.getNom());
+            System.out.println(s.getDateRecrutement());
+            soigneur.setDateRecrutement(s.getDateRecrutement());
             em.persist(soigneur);
-            em.getTransaction().commit();
+
         }
         catch (Error e){
             System.out.println(e);

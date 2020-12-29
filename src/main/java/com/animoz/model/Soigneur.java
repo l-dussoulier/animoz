@@ -1,5 +1,7 @@
 package com.animoz.model;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +22,7 @@ public class Soigneur {
 	private Long id;
 	private String nom;
 	private String numero;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate dateRecrutement;
 
 	@ManyToMany
