@@ -22,6 +22,10 @@ public class SoigneurService {
         return soigneurRepository.getListSoigneur();
     }
 
+    public List getListSoigneurLike(String nom) {
+        return soigneurRepository.getListSoigneurLike("%"+nom+"%");
+    }
+
     @Transactional
     public Soigneur addSoigneur(SoigneurDto soigneurDto){
 
@@ -37,6 +41,8 @@ public class SoigneurService {
 
         return soigneur;
     }
+
+
 
 }
 

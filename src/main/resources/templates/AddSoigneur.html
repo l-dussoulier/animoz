@@ -4,6 +4,11 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
+          integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <title>Création Soigneur</title>
 </head>
 <body>
@@ -31,30 +36,49 @@
     </div>
 </nav>
 
+<div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+        <h2 style="text-align: center">Ajouter un soigneur</h2>
+    </div>
+    <div class="col-md-4">
+    </div>
+</div>
 
-<h1>Ajouter un soigneur</h1>
-<div class="col-md-2">
-    <form method="POST" data-th-action="@{/soigneur}" data-th-object="${soigneur}" accept-charset="utf-8">
-        <div class="row">
-            <label class="col-md-6">Nom</label>
-            <input class="col-md-6" type="text" data-th-field="*{nom}">
-            <span data-th-errors="*{nom}"></span>
-        </div>
-        <div class="row">
-            <label class="col-md-6">Numéro</label>
-            <input class="col-md-6" type="text" data-th-field="*{numero}">
-            <span data-th-errors="*{numero}"></span>
-        </div>
-        <div class="row">
-            <label class="col-md-6">Date recrutement</label>
-            <input class="col-md-6" type="date"data-th-value="*{dateRecrutement}"  data-th-field="*{dateRecrutement}">
-            <span data-th-errors="*{dateRecrutement}"></span>
-        </div>
-        <div class="row">
-            <div class="col-md-7"></div>
-            <input class="col-md-4" type="submit">
-        </div>
-    </form>
+<div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4 pl-5 pr-5">
+        <br>
+
+
+            <form method="POST" data-th-action="@{/soigneur}" data-th-object="${soigneur}" accept-charset="utf-8">
+                <div class="row mb-3 form-group">
+                    <label class="">Nom</label>
+                    <input class="form-control" type="text" data-th-field="*{nom}">
+                    <span data-th-errors="*{nom}"></span>
+                </div>
+                <div class="row mb-3 form-group">
+                    <label>Numéro</label>
+                    <input class="form-control" type="text" data-th-field="*{numero}">
+                    <span data-th-errors="*{numero}"></span>
+                </div>
+                <div class="row mb-3  form-group">
+                    <label>Date recrutement</label>
+                    <input class="form-control" type="date" data-th-value="*{dateRecrutement}"
+                           data-th-field="*{dateRecrutement}">
+                    <span data-th-errors="*{dateRecrutement}"></span>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-6"></div>
+                    <input class="col-md-4 btn btn-primary" type="submit">
+                </div>
+            </form>
+
+
+    </div>
+    <div class="col-md-4">
+    </div>
+
 </div>
 </body>
 </html>

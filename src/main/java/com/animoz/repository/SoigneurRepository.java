@@ -1,5 +1,6 @@
 package com.animoz.repository;
 
+import com.animoz.model.Animal;
 import com.animoz.model.Soigneur;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -29,18 +30,21 @@ public class SoigneurRepository {
             System.out.println(s.getDateRecrutement());
             soigneur.setDateRecrutement(s.getDateRecrutement());
             em.persist(soigneur);
-
         }
         catch (Error e){
             System.out.println(e);
         }
         finally {
             em.close();
-
         }
+    }
 
+    public List<Soigneur> getListSoigneurLike(String nom) {
+        List request = em.createQuery("select a from Soigneur a where a.nom like :param ")
+                .setParameter("param",nom)
+                .getResultList();
 
-
+        return request;
     }
 
 }

@@ -1,5 +1,6 @@
 package com.animoz.controller;
 
+import com.animoz.model.Animal;
 import com.animoz.model.Soigneur;
 import com.animoz.service.SoigneurService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -47,5 +49,13 @@ public class SoigneurController {
 
 
         return "accueil";
+    }
+
+    @GetMapping(path = "/findSoigneur")
+    public String RechercheSoigneur(@RequestParam(name="filtre") String filtre, Model model){
+        List<Soigneur> listeFiltre = soigneurService.getListSoigneurLike(filtre);
+        model.addAttribute("listeSoigneurs",listeFiltre);
+        System.out.println(filtre);
+        return "listeSoigneurs";
     }
 }
