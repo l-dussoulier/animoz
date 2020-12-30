@@ -3,16 +3,9 @@ package com.animoz.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
+
+import static javax.persistence.EnumType.STRING;
 
 @Entity
 public class Animal {
@@ -23,8 +16,8 @@ public class Animal {
 	private String nom;
 	private String origine;
 	private String description;
-	
-	@Enumerated(EnumType.STRING)
+	@Enumerated(STRING)
+	@Column(nullable = false)
 	private Regime regime;
 
 	@ManyToOne

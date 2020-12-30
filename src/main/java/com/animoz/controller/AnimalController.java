@@ -1,6 +1,9 @@
 package com.animoz.controller;
 
 import com.animoz.model.Animal;
+import com.animoz.model.Espece;
+import com.animoz.model.Regime;
+import com.animoz.model.Soigneur;
 import com.animoz.service.AnimalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,7 +15,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.List;
+import java.util.*;
+
+import static org.springframework.validation.ValidationUtils.rejectIfEmpty;
 
 @Controller
 public class AnimalController {
@@ -20,29 +25,38 @@ public class AnimalController {
     @Autowired
     private AnimalService animalService;
 
+
+
     @GetMapping (path = "/animaux")
 public String AfficherListeAnimaux(Model model){
 
         List<Animal> listeAnimaux = animalService.getListeAnimaux();
-        model.addAttribute("unNombre",42);
-        model.addAttribute("message","hello world");
+
+
         model.addAttribute("listeAnimaux",listeAnimaux);
+
         return "listeAnimaux";
 
     }
 
     @GetMapping ( path = "/animal")
-        public String affichierFormulaireCreation(@ModelAttribute("animal") AnimalDto animalDto){
+        public String affichierFormulaireCreation(@ModelAttribute("animal") AnimalDto animalDto, Model model){
+        List<Regime> listeRegimes = new ArrayList<>(EnumSet.allOf(Regime.class));
+        model.addAttribute("listeRegimes",listeRegimes);
+        model.addAttribute("listeEspeces",animalService.getAllEspeces());
 
         return "formAnimal";
         }
 
     @PostMapping( path = "/animal")
-    public String traiterFormulaireCreation(@Validated @ModelAttribute("animal") AnimalDto animalDto, BindingResult bindingResult){
+    public String traiterFormulaireCreation(@Validated @ModelAttribute("animal") AnimalDto animalDto, BindingResult bindingResult, Model model){
+        rejectIfEmpty(bindingResult, "regime", "validation");
         if (bindingResult.hasErrors()){
-            return affichierFormulaireCreation(animalDto);
+
+            return affichierFormulaireCreation(animalDto,model);
         }
         System.out.println(animalDto.getNom());
+        Animal animal = animalService.addAnimal(animalDto);
         return "accueil";
     }
 
@@ -53,4 +67,5 @@ public String AfficherListeAnimaux(Model model){
         System.out.println(filtre);
         return "listeAnimaux";
     }
+
 }

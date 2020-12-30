@@ -1,10 +1,15 @@
 package com.animoz.service;
 
+import com.animoz.controller.AnimalDto;
+import com.animoz.controller.SoigneurDto;
 import com.animoz.model.Animal;
+import com.animoz.model.Espece;
+import com.animoz.model.Soigneur;
 import com.animoz.repository.AnimalRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -19,5 +24,26 @@ public class AnimalService {
 
     public List getListAnimalLike(String nom) {
         return animalRepository.getListAnimalLike("%"+nom+"%");
+    }
+
+    @Transactional
+    public Animal addAnimal(AnimalDto animalDto){
+
+
+        Animal animal = new Animal();
+        animal.setNom(animalDto.getNom());
+        animal.setDescription((animalDto.getDescription()));
+        animal.setRegime(animalDto.getRegime());
+        System.out.println(animalDto.getEspece());
+
+        animal.setEspece(animalDto.getEspece());
+        animalRepository.save(animal);
+
+
+        return animal;
+    }
+
+    public List<Espece> getAllEspeces() {
+        return animalRepository.getAllEspece();
     }
 }

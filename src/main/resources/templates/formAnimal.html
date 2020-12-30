@@ -2,14 +2,101 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
+          integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <title>Création animal</title>
 </head>
 <body>
-    <form method="POST" data-th-action="@{/animal}" data-th-object="${animal}" accept-charset="utf-8">
-        <label>Nom</label>
-        <input type="text" data-th-field="*{nom}">
-        <span data-th-errors="*{nom}"></span>
-        <input type="submit">
-    </form>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="accueil.html" data-th-href="@{/}">Animoz</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="listeSoigneurs.html" data-th-href="@{/soigneurs}">Liste des soigneurs</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="listeAnimaux.html" data-th-href="@{/animaux}">Liste des animaux</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" href="formAnimal.html" data-th-href="@{/animal}">Ajouter un animal</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="AddSoigneur.html" data-th-href="@{/soigneur}">Ajouter un soigneur</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+        <h2 style="text-align: center">Ajouter un animal</h2>
+    </div>
+    <div class="col-md-4">
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4 pl-5 pr-5">
+        <br>
+        <form method="POST" data-th-action="@{/animal}" data-th-object="${animal}" accept-charset="utf-8">
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="mb-3 col-md-4">
+                <label class="">Nom</label>
+                <input class="form-control" type="text" data-th-field="*{nom}">
+                <span data-th-errors="*{nom}"></span>
+            </div>
+        </div>
+            <div class="row">
+                <div class="col-md-4"></div>
+                <div class="mb-3 col-md-4">
+                    <label class="">Description</label>
+                    <input class="form-control" type="text" data-th-field="*{description}">
+                    <span data-th-errors="*{description}"></span>
+                </div>
+            </div>
+           <div class="row">
+                <div class="col-md-4"></div>
+                <div class="mb-3 col-md-4">
+                    <label>Régime alimentaire</label>
+                    <select th:field="*{regime}" class="form-control text-capitalize">
+                        <option th:each="regime: ${listeRegimes}" th:value="${regime}" th:text="${regime}"></option>
+                    </select>
+                    <span data-th-errors="*{regime}"></span>
+                </div>
+            </div>
+               <div class="row">
+                    <div class="col-md-4"></div>
+                    <div class="mb-3 col-md-4">
+                        <label class="">Espece</label>
+                        <select th:field="*{espece}" class="form-control text-capitalize">
+                            <option th:each="espece: ${listeEspeces}" th:value="${espece.nom}" th:text="${espece.nom}"></option>
+                        </select>
+                        <span data-th-errors="*{espece}"></span>
+                    </div>
+                </div>
+
+            <div class="row mt-4">
+                <div class="col-md-4"></div>
+                <input class="col-md-4 btn btn-primary" type="submit">
+            </div>
+        </form>
+
+
+    </div>
+    <div class="col-md-4">
+    </div>
+
+</div>
 </body>
 </html>
