@@ -29,15 +29,8 @@ public class SoigneurService {
         Soigneur soigneur = new Soigneur();
         soigneur.setNom(soigneurDto.getNom());
         soigneur.setNumero(soigneurDto.getNumero());
+        soigneur.setDateRecrutement(soigneurDto.getDateRecrutement());
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy");
-
-        //convert String to LocalDate
-        LocalDate localDate = LocalDate.parse((CharSequence) soigneurDto.getDateRecrutement(), formatter);
-        if (localDate instanceof LocalDate){
-            System.out.println(localDate);
-            soigneur.setDateRecrutement(localDate);
-        }
         System.out.println("probleme frere");
         soigneurRepository.save(soigneur);
 

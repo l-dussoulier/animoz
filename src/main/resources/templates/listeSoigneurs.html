@@ -16,7 +16,7 @@
     <tr data-th-each="soigneur : ${listeSoigneur}">
         <td data-th-text="${ soigneur.numero }"></td>
         <td data-th-text="${ soigneur.nom }"></td>
-        <td data-th-text="${ soigneur.dateRecrutement }"></td>
+        <td th:text="${#dates.format(soigneur.dateRecrutement, 'dd/MM/yyyy')}"></td>
 
     </tr>
     </tbody>

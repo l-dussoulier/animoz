@@ -4,6 +4,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -23,7 +24,7 @@ public class Soigneur {
 	private String nom;
 	private String numero;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	private LocalDate dateRecrutement;
+	private Date dateRecrutement;
 
 	@ManyToMany
 	@JoinTable(name = "PopulationSoigneur", 
@@ -55,11 +56,11 @@ public class Soigneur {
 		this.numero = numero;
 	}
 
-	public LocalDate getDateRecrutement() {
+	public Date getDateRecrutement() {
 		return dateRecrutement;
 	}
 
-	public void setDateRecrutement(LocalDate dateRecrutement) {
+	public void setDateRecrutement(Date dateRecrutement) {
 		this.dateRecrutement = dateRecrutement;
 	}
 
