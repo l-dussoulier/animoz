@@ -35,8 +35,7 @@ public class AnimalService {
         animal.setDescription((animalDto.getDescription()));
         animal.setRegime(animalDto.getRegime());
         System.out.println(animalDto.getEspece());
-
-        animal.setEspece(animalDto.getEspece());
+        animal.setEspece((Espece) animalRepository.getEspeceSelect(animalDto.getEspece()));
         animalRepository.save(animal);
 
 

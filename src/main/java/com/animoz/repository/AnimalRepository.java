@@ -2,7 +2,6 @@ package com.animoz.repository;
 
 import com.animoz.model.Animal;
 import com.animoz.model.Espece;
-import com.animoz.model.Soigneur;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -48,8 +47,12 @@ public class AnimalRepository {
 
     public List<Espece> getAllEspece() {
     return em.createQuery("select a from Espece a ").getResultList();
+    }
 
-
+    public Espece getEspeceSelect(String nom){
+        return (Espece) em.createQuery("select a from Espece a where a.nom = :param")
+                .setParameter("param",nom)
+                .getSingleResult();
     }
 
 
