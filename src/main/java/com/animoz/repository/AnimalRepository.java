@@ -2,11 +2,13 @@ package com.animoz.repository;
 
 import com.animoz.model.Animal;
 import com.animoz.model.Espece;
+import com.animoz.model.Soigneur;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class AnimalRepository {
@@ -14,21 +16,27 @@ public class AnimalRepository {
     @Autowired
     private EntityManager em;
 
+    public Animal findById(Long id) {
+        return (Animal) em.createQuery("select a from Animal a where a.id = :param")
+                .setParameter("param", id)
+                .getSingleResult();
+    }
+
 
     public List<Animal> getListAnimaux() {
         return em.createQuery("select a from Animal a ORDER BY a.nom", Animal.class)
-                            .getResultList();
+                .getResultList();
     }
 
     public List<Animal> getListAnimalLike(String nom) {
         List request = em.createQuery("select a from Animal a where a.nom like :param ")
-                                    .setParameter("param",nom)
-                                    .getResultList();
+                .setParameter("param", nom)
+                .getResultList();
 
         return request;
     }
 
-    public void save(Animal a){
+    public void save(Animal a) {
         try {
             Animal animal = new Animal();
             animal.setNom(a.getNom());
@@ -36,25 +44,32 @@ public class AnimalRepository {
             animal.setRegime(a.getRegime());
             animal.setEspece(a.getEspece());
             em.persist(animal);
-        }
-        catch (Error e){
+        } catch (Error e) {
             System.out.println(e);
-        }
-        finally {
+        } finally {
             em.close();
         }
     }
 
     public List<Espece> getAllEspece() {
-    return em.createQuery("select a from Espece a ").getResultList();
+        return em.createQuery("select a from Espece a ").getResultList();
     }
 
-    public Espece getEspeceSelect(String nom){
+    public Espece getEspeceSelect(String nom) {
         return (Espece) em.createQuery("select a from Espece a where a.nom = :param")
-                .setParameter("param",nom)
+                .setParameter("param", nom)
                 .getSingleResult();
     }
 
+    public void deleteSoigneur(Long idSoigneur) {
+        Soigneur s = em.find(Soigneur.class,idSoigneur);
+        var t = s.getAnimaux();
+
+        em.close();
 
 
+        em.remove(t);
+
+
+    }
 }

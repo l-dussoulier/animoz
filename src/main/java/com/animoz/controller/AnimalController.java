@@ -4,16 +4,14 @@ import com.animoz.model.Animal;
 import com.animoz.model.Espece;
 import com.animoz.model.Regime;
 import com.animoz.model.Soigneur;
+import com.animoz.service.AnimalNonTrouveeExeption;
 import com.animoz.service.AnimalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
@@ -31,10 +29,7 @@ public class AnimalController {
 public String AfficherListeAnimaux(Model model){
 
         List<Animal> listeAnimaux = animalService.getListeAnimaux();
-
-
         model.addAttribute("listeAnimaux",listeAnimaux);
-
         return "listeAnimaux";
 
     }
@@ -52,7 +47,6 @@ public String AfficherListeAnimaux(Model model){
     public String traiterFormulaireCreation(@Validated @ModelAttribute("animal") AnimalDto animalDto, BindingResult bindingResult, Model model){
         rejectIfEmpty(bindingResult, "regime", "validation");
         if (bindingResult.hasErrors()){
-
             return affichierFormulaireCreation(animalDto,model);
         }
         System.out.println(animalDto.getNom());
@@ -64,8 +58,21 @@ public String AfficherListeAnimaux(Model model){
     public String RechercheAnimal(@RequestParam(name="filtre") String filtre, Model model){
         List<Animal> listeFiltre = animalService.getListAnimalLike(filtre);
         model.addAttribute("listeAnimaux",listeFiltre);
-        System.out.println(filtre);
         return "listeAnimaux";
+    }
+
+    @GetMapping("/animal/{idAnimal}")
+    public String afficherRecapitulatifAnimal(Model model, @PathVariable Long idAnimal) throws AnimalNonTrouveeExeption {
+        var t =animalService.get(idAnimal).getSoigneurs();
+        model.addAttribute("DetailAnimal",animalService.get(idAnimal));
+        model.addAttribute("soingeursList",t);
+        return "DetailAnimal";
+    }
+
+    @GetMapping (path = "/delete/{idSoigneur}")
+    public String deleteSoigneur(Model model,@PathVariable Long idSoigneur){
+        animalService.deleteSoigneur(idSoigneur);
+        return "accueil";
     }
 
 }

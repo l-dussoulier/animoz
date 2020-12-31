@@ -1,10 +1,8 @@
 package com.animoz.service;
 
 import com.animoz.controller.AnimalDto;
-import com.animoz.controller.SoigneurDto;
 import com.animoz.model.Animal;
 import com.animoz.model.Espece;
-import com.animoz.model.Soigneur;
 import com.animoz.repository.AnimalRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -44,5 +42,13 @@ public class AnimalService {
 
     public List<Espece> getAllEspeces() {
         return animalRepository.getAllEspece();
+    }
+
+    public Animal get(Long id) throws AnimalNonTrouveeExeption{
+        return animalRepository.findById(id);
+    }
+
+    public void deleteSoigneur(Long idSoigneur) {
+        animalRepository.deleteSoigneur(idSoigneur);
     }
 }
