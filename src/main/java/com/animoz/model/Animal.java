@@ -8,6 +8,7 @@ import javax.persistence.*;
 import static javax.persistence.EnumType.STRING;
 
 @Entity
+//@NamedQuery(name="deleteSoigneur", query="delete from Animal.soigneurs a where a.id = :id")
 public class Animal {
 
 	@Id

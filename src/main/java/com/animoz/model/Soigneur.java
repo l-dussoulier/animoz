@@ -81,4 +81,6 @@ public class Soigneur {
 			animal.getSoigneurs().add(this);
 		}
 	}
+
+
 }

@@ -40,11 +40,7 @@ public class AnimalDto {
         this.regime = regime;
     }
 
-    public String getEspece() {
-        return espece;
-    }
+    public String getEspece() { return espece; }
 
-    public void setEspece(String espece) {
-        this.espece = espece;
-    }
+    public void setEspece(String espece) { this.espece = espece; }
 }

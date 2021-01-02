@@ -72,8 +72,7 @@
     </div>
     <hr>
     <br>
-    <h4 style="text-align: center">Liste des soingeurs</h4>
-    <h6 style="text-align: right" class="ml-3 pb-1"><a href="#"><i class="fas fa-plus"></i></a></h6>
+    <h4 style="text-align: center">Liste des soingeurs pour l'animal&nbsp; <h4 data-th-text="${ DetailAnimal.nom }"></h4> </h4>
     <table class="table table-hover">
         <thead class="thead-dark">
         <tr>
@@ -89,10 +88,30 @@
             <td data-th-text="${ soigneur.numero }"></td>
             <td data-th-text="${ soigneur.nom }"></td>
             <td th:text="${#dates.format(soigneur.dateRecrutement, 'dd/MM/yyyy')}"></td>
-            <td><a href="#" data-th-href="@{/delete/{id}(id=${soigneur.id})}"><i class="fas fa-trash-alt"></i></a></td>
+            <td><a href="#" data-th-href="@{'/delete/' + ${DetailAnimal.id} + '/' + ${soigneur.id}}"><i class="fas fa-trash-alt"></i></a></td>
         </tr>
         </tbody>
     </table>
+
+<div class="row">
+    <h4 class="ml-3" >Ajouter un soigneur pour l'animal</h4>
+    <table class="table table-hover mt-2 ml-3" style="max-width: 500px">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col">Nom</th>
+            <th scope="col"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+        <tr data-th-each="soigneur : ${soingeursAddList}">
+            <td data-th-text="${ soigneur.nom }"></td>
+            <td><a href="#" data-th-href="@{'/addSoigneurAnimal/' + ${DetailAnimal.id} + '/' + ${soigneur.id}}"><i class="fas fa-plus"></i></a></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
 </div>
 
 </body>

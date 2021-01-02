@@ -71,7 +71,7 @@
         <tbody>
         <tr data-th-each="animal : ${listeAnimaux}">
             <td data-th-text="${ animal.nom }"></td>
-            <td data-th-text="${ animal.espece}"></td>
+            <td data-th-text="${ animal.espece }"></td>
             <td data-th-text="${ animal.regime}"></td>
 
             <td><a href="DetailAnimal.html" data-th-href="@{/animal/{id}(id=${animal.id})}"><i class="fas fa-user-edit"></i></a></td>

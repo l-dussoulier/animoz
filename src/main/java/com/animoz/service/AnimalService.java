@@ -3,6 +3,7 @@ package com.animoz.service;
 import com.animoz.controller.AnimalDto;
 import com.animoz.model.Animal;
 import com.animoz.model.Espece;
+import com.animoz.model.Soigneur;
 import com.animoz.repository.AnimalRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,17 +27,12 @@ public class AnimalService {
 
     @Transactional
     public Animal addAnimal(AnimalDto animalDto){
-
-
         Animal animal = new Animal();
         animal.setNom(animalDto.getNom());
         animal.setDescription((animalDto.getDescription()));
         animal.setRegime(animalDto.getRegime());
-        System.out.println(animalDto.getEspece());
         animal.setEspece((Espece) animalRepository.getEspeceSelect(animalDto.getEspece()));
         animalRepository.save(animal);
-
-
         return animal;
     }
 
@@ -48,7 +44,11 @@ public class AnimalService {
         return animalRepository.findById(id);
     }
 
-    public void deleteSoigneur(Long idSoigneur) {
-        animalRepository.deleteSoigneur(idSoigneur);
+    public void deleteSoigneur(Long idAnimal, Long idSoigneur) {
+        animalRepository.deleteSoigneur(idAnimal, idSoigneur);
+    }
+
+    public void addSoigneur(Long idAnimal, Long idSoigneur) {
+        animalRepository.addSoigneur(idAnimal,idSoigneur);
     }
 }

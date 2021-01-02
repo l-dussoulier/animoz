@@ -1,16 +1,15 @@
 package com.animoz.repository;
 
-import com.animoz.model.Animal;
 import com.animoz.model.Soigneur;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Repository
+@Transactional
 public class SoigneurRepository {
 
     @Autowired
@@ -19,7 +18,7 @@ public class SoigneurRepository {
 
     public List<Soigneur> getListSoigneur() {
         return em.createQuery("select s from Soigneur s ORDER BY s.nom", Soigneur.class)
-                            .getResultList();
+                 .getResultList();
     }
 
     public void save(Soigneur s){
@@ -39,12 +38,12 @@ public class SoigneurRepository {
         }
     }
 
-    public List<Soigneur> getListSoigneurLike(String nom) {
+    public List<Soigneur> getListSoigneurLike(String filtre) {
+        System.out.println(filtre);
         List request = em.createQuery("select a from Soigneur a where a.nom like :param ")
-                .setParameter("param",nom)
+                .setParameter("param",filtre)
                 .getResultList();
 
         return request;
     }
-
 }

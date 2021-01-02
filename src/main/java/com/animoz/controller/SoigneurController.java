@@ -8,10 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -28,34 +25,33 @@ public class SoigneurController {
         List<Soigneur> listeSoigneur = soigneurService.getListeSoigneur();
         model.addAttribute("listeSoigneur", listeSoigneur);
         return "listeSoigneurs";
-
     }
 
     @GetMapping(path = "/soigneur")
     public String affichierFormulaireCreation(@ModelAttribute("soigneur") SoigneurDto soigneurDto) {
-
         return "AddSoigneur";
     }
 
     @PostMapping(path = "/soigneur")
     public String AjouterSoigneur(@Validated @ModelAttribute("soigneur") SoigneurDto soigneurDto, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-
             return affichierFormulaireCreation(soigneurDto);
-
         }
-
         Soigneur soigneur = soigneurService.addSoigneur(soigneurDto);
-
-
-        return "accueil";
+        return "redirect:/soigneurs";
     }
 
     @GetMapping(path = "/findSoigneur")
     public String RechercheSoigneur(@RequestParam(name="filtre") String filtre, Model model){
         List<Soigneur> listeFiltre = soigneurService.getListSoigneurLike(filtre);
         model.addAttribute("listeSoigneurs",listeFiltre);
-        System.out.println(filtre);
         return "listeSoigneurs";
+    }
+
+    @GetMapping(path ="/addSoigneur/{idSoigneur}")
+    public String addSoigneurAnimal(Model model,@PathVariable Long idSoigneur){
+        List<Soigneur> liste = soigneurService.getListeSoigneur();
+        model.addAttribute("listeSoigneursAdd",liste);
+        return "listeSoigneursAdd";
     }
 }

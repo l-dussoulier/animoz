@@ -6,6 +6,7 @@ import com.animoz.model.Regime;
 import com.animoz.model.Soigneur;
 import com.animoz.service.AnimalNonTrouveeExeption;
 import com.animoz.service.AnimalService;
+import com.animoz.service.SoigneurService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,11 +24,13 @@ public class AnimalController {
     @Autowired
     private AnimalService animalService;
 
+    @Autowired
+    SoigneurService soigneurService;
+
 
 
     @GetMapping (path = "/animaux")
 public String AfficherListeAnimaux(Model model){
-
         List<Animal> listeAnimaux = animalService.getListeAnimaux();
         model.addAttribute("listeAnimaux",listeAnimaux);
         return "listeAnimaux";
@@ -39,7 +42,6 @@ public String AfficherListeAnimaux(Model model){
         List<Regime> listeRegimes = new ArrayList<>(EnumSet.allOf(Regime.class));
         model.addAttribute("listeRegimes",listeRegimes);
         model.addAttribute("listeEspeces",animalService.getAllEspeces());
-
         return "formAnimal";
         }
 
@@ -49,9 +51,8 @@ public String AfficherListeAnimaux(Model model){
         if (bindingResult.hasErrors()){
             return affichierFormulaireCreation(animalDto,model);
         }
-        System.out.println(animalDto.getNom());
         Animal animal = animalService.addAnimal(animalDto);
-        return "accueil";
+        return "redirect:/animaux";
     }
 
     @GetMapping(path = "/findAnimal")
@@ -66,13 +67,23 @@ public String AfficherListeAnimaux(Model model){
         var t =animalService.get(idAnimal).getSoigneurs();
         model.addAttribute("DetailAnimal",animalService.get(idAnimal));
         model.addAttribute("soingeursList",t);
+        model.addAttribute("soingeursAddList",soigneurService.getListeSoigneur());
         return "DetailAnimal";
     }
 
-    @GetMapping (path = "/delete/{idSoigneur}")
-    public String deleteSoigneur(Model model,@PathVariable Long idSoigneur){
-        animalService.deleteSoigneur(idSoigneur);
-        return "accueil";
+    @GetMapping (path = "/delete/{idAnimal}/{idSoigneur}")
+    public String deleteSoigneur(Model model,@PathVariable Long idAnimal, @PathVariable Long idSoigneur){
+       animalService.deleteSoigneur(idAnimal,idSoigneur);
+       return "redirect:/animal/"+idAnimal;
     }
+
+    @GetMapping(path = "/addSoigneurAnimal/{idAnimal}/{idSoigneur}")
+    public String addSoigneurAnimal(Model model,@PathVariable Long idAnimal, @PathVariable Long idSoigneur){
+        animalService.addSoigneur(idAnimal,idSoigneur);
+        return "redirect:/animal/"+idAnimal;
+    }
+
+
+
 
 }
